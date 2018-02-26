@@ -1,0 +1,39 @@
+<h3>Service provider page</h3>
+<div *ngIf="serviceProvider; else elseBlock" class="col-group service-provider-container">
+  <div class="service-provider-name">
+    <p>{{ serviceProvider.name.slice(0, 1).toUpperCase() + serviceProvider.name.slice(1) }}</p>
+  </div>
+  <div class="service-provider-categories">
+    <div class="categories-title"></div>
+    <div *ngFor="let sphere of serviceSpheres; let i = index" class="category-item">
+      <p class="category-name">{{ sphere.name.slice(0, 1).toUpperCase() + sphere.name.slice(1) }}</p>
+      <p class="category-type" *ngFor="let type of sphere.types">- {{ type }}</p>
+      <hr *ngIf="i !== (serviceSpheres.length - 1)"/>
+    </div>
+  </div>
+  <div class="service-provider-contacts">
+    <div class="contacts-title">
+      <p>Контактная информация</p>
+    </div>
+    <div *ngIf="serviceProvider.mobile || serviceProvider.phone" class="contacts-item">
+      <p class="contact-name">Телефоны:</p>
+      <p *ngIf="serviceProvider.mobile">{{ serviceProvider.mobile }}</p>
+      <p *ngIf="serviceProvider.phone">{{ serviceProvider.phone }}</p>
+    </div>
+    <div class="contacts-item">
+      <p class="contact-name">Адрес:</p>
+      <p>г. {{ serviceProvider.city.slice(0, 1).toUpperCase() + serviceProvider.city.slice(1) }}
+        <span *ngIf="serviceProvider.street">ул. {{ serviceProvider.street.slice(0, 1).toUpperCase() + serviceProvider.street.slice(1) }}</span><span *ngIf="serviceProvider.building">, {{ serviceProvider.building }}</span><span *ngIf="serviceProvider.block">/{{ serviceProvider.block }}</span>
+      </p>
+    </div>
+    <div *ngIf="serviceProvider.email" class="contacts-item">
+      <p class="contact-name">E-mail:</p>
+      <p>{{ serviceProvider.email }}</p>
+    </div>
+    <div *ngIf="serviceProvider.site" class="contacts-item">
+      <p class="contact-name">Сайт компании:</p>
+      <p><a href="{{ serviceProvider.site }}">{{ serviceProvider.site }}</a></p>
+    </div>
+  </div>
+</div>
+<ng-template #elseBlock>Такого поставщика услуг не существует!</ng-template>

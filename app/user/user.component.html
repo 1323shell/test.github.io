@@ -1,0 +1,7 @@
+<h3>The User Component.</h3>
+
+<ul>
+  <li *ngFor='let user of user'><a [routerLink]="['/user', user.id, user.name]" routerLinkActive="active">{{ user.name }}</a></li>
+</ul>
+
+<router-outlet></router-outlet>
