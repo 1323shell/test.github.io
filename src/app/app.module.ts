@@ -13,16 +13,11 @@ import { ServiceProviderComponent } from './service-provider/service-provider.co
 import { ServiceProviderService } from './service-provider/service-provider.service';
 import { ServiceProviderDataStorageService } from './shared/service-provider-data-storage.service';
 import { HttpModule } from '@angular/http';
-import { ServiceProviderCreationComponent } from './service-provider/service-provider-creation/service-provider-creation.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ServiceProviderSearchComponent } from './service-provider/service-provider-search/service-provider-search.component';
+import {ServiceProviderCreationComponent} from './service-provider/service-provider-creation/service-provider-creation.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ServiceCategoriesComponent } from './service-categories/service-categories.component';
 import { ServiceCategoryCreationComponent } from './service-categories/service-category-creation/service-category-creation.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
-import { CustomSelectModule } from './shared/custom-select/custom-select.module';
-import { BuildingValidatorDirective } from './shared/validators/building-validator.directive';
-import { TextMaskModule } from 'angular2-text-mask';
-
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +25,7 @@ const appRoutes: Routes = [
     { path: ':id/:name', component: UsersComponent },
   ] },
   { path: 'view', component: ViewComponent },
-  { path: 'search', component: ServiceProviderSearchComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'service-providers', component: ServiceProviderComponent, children: [
     { path: 'creation', component: ServiceProviderCreationComponent },
     { path: ':id', component: ServiceProviderDataViewingComponent}
@@ -51,10 +46,8 @@ const appRoutes: Routes = [
     ServiceProviderDataViewingComponent,
     ServiceProviderComponent,
     ServiceProviderCreationComponent,
-    ServiceProviderSearchComponent,
     ServiceCategoriesComponent,
-    ServiceCategoryCreationComponent,
-    BuildingValidatorDirective
+    ServiceCategoryCreationComponent
   ],
   imports: [
     HttpModule,
@@ -62,9 +55,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    AngularMultiSelectModule,
-    CustomSelectModule,
-    TextMaskModule
+    AngularMultiSelectModule
   ],
   providers: [ServiceProviderService, ServiceProviderDataStorageService],
   bootstrap: [AppComponent]

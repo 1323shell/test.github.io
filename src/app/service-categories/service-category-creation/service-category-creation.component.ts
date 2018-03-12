@@ -161,7 +161,7 @@ export class ServiceCategoryCreationComponent implements OnInit {
     if (this.newSphere) {
       serviceCategory = {
         'name': form.controls.sphereCreate.value,
-        'categories': {
+        'classCategory': {
           'name': form.controls.type.value
         }
       };

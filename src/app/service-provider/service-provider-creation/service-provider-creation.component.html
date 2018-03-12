@@ -1,90 +1,52 @@
 <h3>New Service Provider Creation</h3>
 <div class="service-provider-creation-container">
-  <form #f="ngForm" *ngIf="!formDataWasSaved" novalidate>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm" *ngIf="!formDataWasSaved">
 
     <div class="divider">
       <hr>
       <span>Обязательные поля</span>
     </div>
+
     <label for="name"><span class="star">*</span>Наименование компании:</label>
     <div class="row">
-      <input type="text"
-             required
-             id="name"
-             name="name"
-             ngModel
-             maxlength="50"
-             pattern="^[\x20-\x7Eа-яА-ЯёЁ№]+$"
-             #name="ngModel"
-             placeholder="Укажите наименование поставщика услуг"/>
-    </div>
-    <div *ngIf="name.hasError('required') && (name.touched || name.dirty)" class="error-message">
-      <span>Укажите наименование поставщика услуг</span>
+      <input type="text" id="name" name="name" ngModel #name="ngModel" placeholder="Наименование поставщика услуг"/>
+      <div *ngIf="nameError" class="error-message">
+        <span>Укажите наименование Вашей организации</span>
+      </div>
     </div>
 
-    <div *ngFor="let category of categories; let i = index; let isLast = last; trackBy: trackCategory"
-         [class.add-category-body]="i!==0">
-      <div  *ngIf="i>0"
-            class="categoty-cansel-body"
-            (click)="onDeleteCategory(i)">
-        &#215;<span class="category-cansel">Отменить</span>
-      </div>
-      <label><span class="star">*</span>Сфера услуг компании:</label>
+    <div>
+      <label for="sphere"><span class="star">*</span>Сфера услуг компании:</label>
       <div class="row">
-        <app-custom-select  [options]="domainCategories"
-                            [settings]="customSelectSettings"
-                            (onChange)="onServiceSphereSelect($event, i)"
-                            (onDelete)="onDeleteSphere($event, i)"
-                            [name]="'sphere'+i"
-                            [required]="i==0"
-                            [(ngModel)]="category.sphereSelected"
-                            #sphere="ngModel">
-
-        </app-custom-select>
-      </div>
-      <div *ngIf="sphere.hasError('required') && (sphere.touched || sphere.dirty)"
-           class="error-message">
-        <span>Выберите категорию сферы услуг</span>
+        <select id="sphere" name="sphere" ngModel #sphere="ngModel" (change)="onServiceSphereSelect($event)">
+          <option value="" disabled selected hidden>Выбрать категорию сферы услуг</option>
+          <option  *ngFor="let sphere of domainCategories" value="{{ sphere.id }}">{{ sphere.name.slice(0, 1).toUpperCase() + sphere.name.slice(1) }}</option>
+        </select>
+        <div *ngIf="serviceSphereError" class="error-message">
+          <span>Ни одной категории не выбрано</span>
+        </div>
       </div>
 
-      <label><span class="star">*</span>Вид услуг компании:</label>
+      <label for="type"><span class="star">*</span>Вид услуг компании:</label>
       <div class="row">
-        <angular2-multiselect [data]="category.dropdownList"
-                              [(ngModel)]="category.classSelected"
-                              [settings]="category.dropdownSettings"
-                              [name]="'type'+i"
-                              #type="ngModel"
-                              (onSelect)="onItemSelect($event)"
-                              (onDeSelect)="onItemDeSelect($event)"
-                              [required]="i==0">
-        </angular2-multiselect>
-      </div>
-      <div *ngIf="type.hasError('required') && (type.touched || type.dirty)  && !categories[i].dropdownSettings.disabled"
-           class="error-message">
-        <span>Выберите категории вида услуг</span>
+        <select #type="ngModel" id="type" name="type" ngModel [disabled]="sphere.pristine" (change)="onServiceTypeSelect($event)">
+          <option value="" disabled selected hidden>Выбрать категорию вида услуг</option>
+          <option *ngFor="let type of classCategories" value="{{ type.id }}">{{ type.name.slice(0, 1).toUpperCase() + type.name.slice(1) }}</option>
+        </select>
+        <div *ngIf="serviceTypesError" class="error-message">
+          <span>Ни одной категории не выбрано</span></div>
       </div>
     </div>
 
-    <div  class="add-categories"
-          (click)="onAddCategory($event)"
-          *ngIf="addCategoriesIsActive && this.domainCategories.length > 0">
-      + <span >Выбрать дополнительные категории</span>
+    <div *ngIf="type.value" class="add-category" (click)="onAddCategory($event)">
+      + <span>Добавить категорию</span>
     </div>
 
     <label for="city"><span class="star">*</span>Город:</label>
     <div class="row">
-      <input type="text"
-             required
-             id="city"
-             name="city"
-             ngModel
-             maxlength="50"
-             pattern="^[\x20-\x7Eа-яА-ЯёЁ№]+$"
-             #city="ngModel"
-             placeholder="Укажите город поставщика услуг"/>
-    </div>
-    <div *ngIf="city.hasError('required') && (city.touched || city.dirty)" class="error-message">
-      <span>Укажите город поставщика услуг</span>
+      <input type="text" id="city" name="city" ngModel #city="ngModel" placeholder="Город поставщика услуг"/>
+      <div *ngIf="cityError" class="error-message">
+        <span>Укажите город поставщика услуг</span></div>
     </div>
 
     <div class="divider">
@@ -95,149 +57,44 @@
     <label for="address">Адрес</label>
     <div class="row">
       <div ngModelGroup="address" id="address" class="address">
-        <input type="text"
-               name="street"
-               ngModel
-               (input)="onChangeBuildinAndBlock($event, f)"
-               maxlength="50"
-               pattern="^[\x20-\x7Eа-яА-ЯёЁ№]+$"
-               #street="ngModel"
-               [class.err]="!(street.value || mobile.value || phone.value || email.value || site.value)
-               && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"
-               placeholder="Укажите улицу"/>
-        <input type="text"
-               name="building"
-               [building]="street.value"
-               [(ngModel)]="address.building"
-               (input)="onChangeBlock($event, f)"
-               maxlength="4"
-               pattern="^[\x21-\x7Eа-яА-ЯёЁ№]+$"
-               #building="ngModel"
-               [disabled]="!street.value && !building.value"
-               placeholder="Дом"/>
-        <input type="text"
-               name="block"
-               #block="ngModel"
-               [(ngModel)]="address.block"
-               maxlength="3"
-               pattern="^[\x21-\x7Eа-яА-ЯёЁ№]+$"
-               [disabled]="!building.value && !block.value"
-               placeholder="Корпус"/>
+        <input type="text" name="street" ngModel #street="ngModel" placeholder="Улица/проспект"/>
+        <input type="text" name="building" ngModel #building="ngModel" [disabled]="!street.value" placeholder="Дом"/>
+        <input type="text" name="block" ngModel  [disabled]="!building.value" placeholder="Корпус"/>
       </div>
-    </div>
-    <div *ngIf="!(street.value || mobile.value || phone.value || email.value || site.value)
-          && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"
-         class="error-message">
-      <span>Нужно заполнить хотя бы одно поле</span>
-    </div>
-    <div *ngIf="building.hasError('buildingValidator')"
-         class="error-message">
-      <span>Заполните номер дома</span>
-    </div>
-    <div *ngIf="block.hasError('blockValidator')"
-         class="error-message">
-      <span>Заполните улицу и номер дома</span>
+      <div *ngIf="contactsError" class="error-message">
+        <span>Нужно заполнить хотя бы одно поле</span></div>
     </div>
 
     <label for="mobile">Номер мобильного телефона</label>
     <div class="row">
-      <input type="tel"
-             id="mobile"
-             name="mobile"
-             ngModel
-             [textMask]="{mask: mask, keepCharPositions: true}"
-             pattern="^[-0-9()\s+]+$"
-             #mobile="ngModel"
-             [class.err]="!(street.value || mobile.value || phone.value || email.value || site.value)
-               && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"             placeholder="+375 (__) ___-__-__"/>
-    </div>
-    <div *ngIf="!(street.value || mobile.value || phone.value || email.value || site.value)
-          && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"
-         class="error-message">
-      <span>Нужно заполнить хотя бы одно поле</span>
-    </div>
-    <div *ngIf="mobile.hasError('pattern')"
-         class="error-message">
-      <span>Укажите номер телефона в формате +375 (12) 345-67-89</span>
+      <input type="tel" id="mobile" name="mobile" ngModel #mobile="ngModel" placeholder="+___ (__) ___-__-__"/>
+      <div *ngIf="contactsError" class="error-message">
+        <span>Нужно заполнить хотя бы одно поле</span></div>
     </div>
 
     <label for="phone">Номер стационарного телефона</label>
     <div class="row">
-      <input type="tel"
-             id="phone"
-             name="phone"
-             ngModel
-             [textMask]="{mask: mask, keepCharPositions: true}"
-             pattern="^[-0-9()\s+]+$"
-             #phone="ngModel"
-             [class.err]="!(street.value || mobile.value || phone.value || email.value || site.value)
-               && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"             placeholder="+375 (__) ___-__-__"/>
-    </div>
-    <div *ngIf="!(street.value || mobile.value || phone.value || email.value || site.value)
-          && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"
-         class="error-message">
-      <span>Нужно заполнить хотя бы одно поле</span>
-    </div>
-    <div *ngIf="phone.hasError('pattern')"
-         class="error-message">
-      <span>Укажите номер телефона в формате +375 (12) 345-67-89</span>
+      <input type="tel" id="phone" name="phone" ngModel #phone="ngModel" placeholder="+___ (__) ___-__-__"/>
+      <div *ngIf="contactsError" class="error-message">
+        <span>Нужно заполнить хотя бы одно поле</span></div>
     </div>
 
     <label for="email">E-mail поставщика услуг</label>
     <div class="row">
-      <input type="email"
-             id="email"
-             name="email"
-             ngModel
-             #email="ngModel"
-             min="6"
-             pattern='^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
-             [class.err]="!(street.value || mobile.value || phone.value || email.value || site.value)
-               && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"             placeholder="name@example.com"/>
-    </div>
-    <div *ngIf="!(street.value || mobile.value || phone.value || email.value || site.value)
-          && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"
-         class="error-message">
-      <span>Нужно заполнить хотя бы одно поле</span>
-    </div>
-    <div *ngIf="email.hasError('pattern')"
-         class="error-message">
-      <span>Укажите адрес электронной почты в формате example@mail.ru</span>
+      <input type="email" id="email" name="email" ngModel email #email="ngModel" placeholder="name@example.com"/>
+      <div *ngIf="contactsError" class="error-message">
+        <span>Нужно заполнить хотя бы одно поле</span></div>
     </div>
 
     <label for="site">Сайт поставщика услуг</label>
     <div class="row">
-      <input type="text"
-             id="site"
-             name="site"
-             ngModel
-             maxlength="255"
-             min="4"
-             pattern="^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$"
-             #site="ngModel"
-             [class.err]="!(street.value || mobile.value || phone.value || email.value || site.value)
-               && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"             placeholder="www.name.com"/>
-    </div>
-    <div *ngIf="!(street.value || mobile.value || phone.value || email.value || site.value)
-         && (street.touched && mobile.touched && phone.touched && email.touched && site.touched)"
-         class="error-message">
-      <span>Нужно заполнить хотя бы одно поле</span>
-    </div>
-    <div *ngIf="site.hasError('pattern')"
-         class="error-message">
-      <span>Укажите адрес веб-сайта в формате www.sitename.by</span>
+      <input type="text" id="site" name="site" ngModel #site="ngModel" placeholder="www.name.com"/>
+      <div *ngIf="contactsError" class="error-message">
+        <span>Нужно заполнить хотя бы одно поле</span></div>
     </div>
 
     <div class="row-button">
-      <div class="button button-disabled"
-           *ngIf="!f.valid || !(street.value || mobile.value || phone.value || email.value || site.value)">
-        Сохранить
-      </div>
-      <div class="button"
-           (click)="onSubmit(f)"
-           *ngIf="f.valid && (street.value || mobile.value || phone.value || email.value || site.value)">
-        Сохранить
-      </div>
+      <button type="submit" [disabled]="!name.value || !sphere.value || !type.value || !city.value || (!street.value && !mobile.value && !phone.value && !email.value && !site.value)">Сохранить</button>
     </div>
 
     <div class="row">
@@ -246,42 +103,29 @@
 
   </form>
   <div class="saved-data" *ngIf="formDataWasSaved">
-    <div *ngIf="serviceProvider.name">
-      <label>Наименование компании</label>
-      <div class="row">
-        <div>{{serviceProvider.name}}</div>
-      </div>
+    <label>Наименование компании</label>
+    <div class="row">
+      <div>{{this.serviceProvider.name}}</div>
     </div>
-    <div *ngFor="let category of categoriesView">
-      <div *ngIf="category.sphereSelected && category.classSelected.length > 0">
-        <label>Сфера услуг компании</label>
-        <div class="row">
-          <div>
-            <span class="saved-category">{{category.sphereSelected.name}}</span>
-          </div>
-        </div>
-      </div>
 
-      <div *ngIf="category.classSelected.length > 0">
-        <label>Вид услуг компании</label>
-        <div class="row">
-          <div>
-            <span *ngFor="let classSel of category.classSelected"
-                  class="saved-category">
-              {{classSel.itemName}}
-            </span>
-          </div>
-        </div>
+    <label>Сфера услуг компании</label>
+    <div class="row">
+      <div>
+        <span class="saved-category"></span>
       </div>
     </div>
 
-    <div *ngIf="serviceProvider.city">
-      <label>Город</label>
-      <div class="row">
-        <div>{{ serviceProvider.city }}</div>
+    <label>Вид услуг компании</label>
+    <div class="row">
+      <div>
+        <span class="saved-category"></span>
       </div>
     </div>
 
+    <label>Город</label>
+    <div class="row">
+      <div>{{ this.serviceProvider.city }}</div>
+    </div>
 
     <label *ngIf="this.serviceProvider.street">Адрес</label>
     <div class="row">
@@ -290,11 +134,9 @@
       <div class="saved-building" *ngIf="this.serviceProvider.block">{{ this.serviceProvider.block}}</div>
     </div>
 
-    <div *ngIf="serviceProvider.mobile">
-      <label >Номер мобильного телефона</label>
-      <div class="row">
-        <div>{{ serviceProvider.mobile }}</div>
-      </div>
+    <label *ngIf="this.serviceProvider.mobile">Номер мобильного телефона</label>
+    <div class="row" *ngIf="this.serviceProvider.mobile">
+      <div>{{ this.serviceProvider.mobile }}</div>
     </div>
 
     <label *ngIf="this.serviceProvider.phone">Номер стационарного телефона</label>
