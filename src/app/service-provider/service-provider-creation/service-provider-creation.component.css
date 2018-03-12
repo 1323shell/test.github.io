@@ -17,9 +17,6 @@ input, select{
   font-size: 15px;
   outline: none;
 }
-angular2-multiselect{
-  width: 61%;
-}
 input.ng-valid.ng-touched.ng-dirty, select.ng-valid.ng-touched.ng-dirty{
   border: 1px solid #2d3e50;
 }
@@ -32,24 +29,6 @@ button{
   color: white;
   background-color: #25ced1;
   border: none;
-}
-.button{
-  width: 217px;
-  height: 50px;
-  border-radius: 2px;
-  font-size: 16px;
-  outline: none;
-  color: white;
-  background-color: #25ced1;
-  border: none;
-  line-height: 50px;
-  vertical-align: middle;
-  text-align: center;
-  cursor: pointer;
-}
-.button-disabled{
-  background-color: #e4e4e4;
-  cursor: default;
 }
 button:disabled, select:disabled, input:disabled{
   background-color: #e4e4e4;
@@ -115,14 +94,24 @@ label{
   margin-right: 25px;
 }
 .error-message{
+  background-color: #ea526f;
+  width: 30%;
+  color: white;
+  padding: 10px;
+  border-radius: 2px;
+  font-size: 16px;
+  display: flex;
   position: relative;
-  width: 61%;
+}
+.error-message::before{
+  content: "◀";
+  position: absolute;
+  top: 13px;
+  left: -12px;
+  color: #ea526f;
 }
 .error-message span{
-  position: absolute;
-  color: #ea526f;
-  right: 0px;
-  top: -24px;
+  margin-left: 10px;
 }
 .return{
   background-color: #2d3e50 !important;
@@ -132,48 +121,18 @@ label{
   background-color: #f6d8de;
   border: 1px #ea526f solid !important;
 }
-.categoty-cansel-body {
-  position: absolute;
-  right: 12px;
-  top: 7px;
-  cursor: pointer;
-  font-size: 30px;
-  font-weight: bold;
-  color: #2d3e50;
-}
-.categoty-cansel-body span{
-  display: inline-block;
-  margin-left: 3px;
-  margin-top: -6px;
-  font-size: 18px;
-  font-weight: normal;
-  vertical-align: middle;
-  text-decoration:underline;
-}
-.add-category-body {
-  width: 65.54%;
-  position: relative;
-  margin-left: -21px;
-  margin-bottom: 15px;
-  padding: 41px 21px 29px 21px;
-  box-sizing: border-box;
-  background-color: #e4e4e4;
-}
-.add-categories{
-  display: inline-block;
-  width: 350px;
+.add-category{
   font-size: 30px;
   color: #2d3e50;
   font-weight: bold;
   margin-bottom: 40px;
   cursor: pointer;
 }
-.add-categories span{
-  display: inline-block;
-  margin-top: -5px;
-  border-bottom: 1px solid #2d3e50;
+.add-category span{
+  text-decoration: underline;
   font-size: 18px;
   font-weight: normal;
+  padding-left: 15px;
   vertical-align: middle;
 }
 .saved-data{
@@ -204,33 +163,7 @@ label{
 }
 .saved-building{
   width: 14% !important;
-  margin-right: 1%;
 }
 .saved-street{
-  min-width: 65% !important;
-  margin-right: 1%;
-}
-.select-sphere{
-  width: 61%;
-}
-.row input.ng-dirty.ng-invalid,.custom-multy-select.ng-touched.ng-invalid {
-  border-color: #ea526f;
-}
-.row input.ng-touched.ng-invalid,.custom-multy-select.ng-touched.ng-invalid {
-  border-color: #ea526f;
-}
-.row .ng-touched.err {
-  border-color: #ea526f;
-}
-.row .ng-dirty.err {
-  border-color: #ea526f;
-}
-.add-category-body {
-  position: relative;
-}
-.add-category-body angular2-multiselect{
-  width: 100%;
-}
-app-custom-select {
-  background-color: #FFFFFF;
+  width: 67% !important;
 }

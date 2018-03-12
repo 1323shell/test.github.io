@@ -33,7 +33,7 @@ export class ServiceProviderDataStorageService {
 
   addServiceProvider(serviceProvider) {
     const url = `${this.apiUrl}/service_providers`;
-    return this.http.post(url, serviceProvider);
+    this.http.post(url, serviceProvider).subscribe();
   }
 
   addServiceCategory(serviceCategory) {
@@ -100,22 +100,5 @@ export class ServiceProviderDataStorageService {
           }
         );
     }
-  }
-  getServiceProvidersByName(data) {
-    this.http.post('http://localhost:4200/assets/data-storage.json', data)
-      .subscribe(
-        (response: Response) => {
-          const serviceProviders: ServiceProvider[] = response.json();
-          this.serviceProviderService.setServiceProviders(serviceProviders);
-        }
-      );
-  }
-
-  getSphereCategories() {
-    return this.http.get(`${this.apiUrl}/domainCategories`);
-  }
-
-  getTypeCategories(id) {
-    return this.http.get(`${this.apiUrl}/domainCategories/${id}/classCategories`);
   }
 }
