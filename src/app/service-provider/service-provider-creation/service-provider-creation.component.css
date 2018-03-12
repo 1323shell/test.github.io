@@ -1,0 +1,236 @@
+.service-provider-creation-container{
+  width: 1000px;
+  background-color: white;
+  margin: 0 auto;
+  padding: 40px;
+}
+form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+input, select{
+  height: 46px;
+  border-radius: 2px;
+  border: 1px #bcbcbc solid;
+  padding-left: 12px;
+  font-size: 15px;
+  outline: none;
+}
+angular2-multiselect{
+  width: 61%;
+}
+input.ng-valid.ng-touched.ng-dirty, select.ng-valid.ng-touched.ng-dirty{
+  border: 1px solid #2d3e50;
+}
+button{
+  width: 217px;
+  height: 50px;
+  border-radius: 2px;
+  font-size: 16px;
+  outline: none;
+  color: white;
+  background-color: #25ced1;
+  border: none;
+}
+.button{
+  width: 217px;
+  height: 50px;
+  border-radius: 2px;
+  font-size: 16px;
+  outline: none;
+  color: white;
+  background-color: #25ced1;
+  border: none;
+  line-height: 50px;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+}
+.button-disabled{
+  background-color: #e4e4e4;
+  cursor: default;
+}
+button:disabled, select:disabled, input:disabled{
+  background-color: #e4e4e4;
+}
+label{
+  width: 100%;
+  color: #2d3e50;
+  font-size: 18px;
+  font-weight: bold;
+}
+.star{
+  color: #25ced1;
+  font-size: 16px;
+}
+.divider{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+.divider hr{
+  border-color: #2d3e50;
+  height: 0;
+  width: 100%;
+}
+.divider span{
+  color: #25ced1;
+  margin-left: 10px;
+  white-space: nowrap;
+}
+.address{
+  display: flex;
+  justify-content: space-between;
+  width: 61%;
+}
+.address input[name="street"]{
+  width: 67%;
+}
+.address input[name="building"], .address input[name="block"]{
+  width: 14%;
+}
+.row{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 20px 0 30px;
+  align-items: center;
+}
+.row input, .row select{
+  width: 61%;
+}
+.row-button{
+  width: 61%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 100px;
+  align-items: center;
+}
+.row-button span{
+  color: #25ced1;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 25px;
+}
+.error-message{
+  position: relative;
+  width: 61%;
+}
+.error-message span{
+  position: absolute;
+  color: #ea526f;
+  right: 0px;
+  top: -24px;
+}
+.return{
+  background-color: #2d3e50 !important;
+  cursor: pointer;
+}
+.error{
+  background-color: #f6d8de;
+  border: 1px #ea526f solid !important;
+}
+.categoty-cansel-body {
+  position: absolute;
+  right: 12px;
+  top: 7px;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
+  color: #2d3e50;
+}
+.categoty-cansel-body span{
+  display: inline-block;
+  margin-left: 3px;
+  margin-top: -6px;
+  font-size: 18px;
+  font-weight: normal;
+  vertical-align: middle;
+  text-decoration:underline;
+}
+.add-category-body {
+  width: 65.54%;
+  position: relative;
+  margin-left: -21px;
+  margin-bottom: 15px;
+  padding: 41px 21px 29px 21px;
+  box-sizing: border-box;
+  background-color: #e4e4e4;
+}
+.add-categories{
+  display: inline-block;
+  width: 350px;
+  font-size: 30px;
+  color: #2d3e50;
+  font-weight: bold;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+.add-categories span{
+  display: inline-block;
+  margin-top: -5px;
+  border-bottom: 1px solid #2d3e50;
+  font-size: 18px;
+  font-weight: normal;
+  vertical-align: middle;
+}
+.saved-data{
+  width: 61%;
+  display: flex;
+  flex-direction: column;
+}
+.saved-data .row div{
+  width: 100%;
+  border: 1px solid #2d3e50;
+  height: 46px;
+  border-radius: 2px;
+  padding: 13px 0 0 12px;
+  font-size: 15px;
+  background-color: #e4e4e4;
+}
+.saved-data .row-button{
+  width: 100%;
+}
+.saved-category{
+  background-color: #ff8a5b;
+  border-radius: 2px;
+  margin: 5px;
+  padding: 10px 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+.saved-building{
+  width: 14% !important;
+  margin-right: 1%;
+}
+.saved-street{
+  min-width: 65% !important;
+  margin-right: 1%;
+}
+.select-sphere{
+  width: 61%;
+}
+.row input.ng-dirty.ng-invalid,.custom-multy-select.ng-touched.ng-invalid {
+  border-color: #ea526f;
+}
+.row input.ng-touched.ng-invalid,.custom-multy-select.ng-touched.ng-invalid {
+  border-color: #ea526f;
+}
+.row .ng-touched.err {
+  border-color: #ea526f;
+}
+.row .ng-dirty.err {
+  border-color: #ea526f;
+}
+.add-category-body {
+  position: relative;
+}
+.add-category-body angular2-multiselect{
+  width: 100%;
+}
+app-custom-select {
+  background-color: #FFFFFF;
+}

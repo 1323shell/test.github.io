@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "providersName",
+    "city": "providersCity",
+    "street": "providersStreet",
+    "building": "19",
+    "block": "1",
+    "mobile": "12345678",
+    "phone": "87654321",
+    "email": "provider@email.com",
+    "site": "www.provider.com",
+    "classCategories": [
+      {
+        "id": 1,
+        "name": "classCategory",
+        "domainCategory": {
+          "id": 1,
+          "name": "domainCategory"
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "providersName2",
+    "city": "providersCity2",
+    "street": "providersStreet",
+    "building": "19",
+    "block": "1",
+    "mobile": "12345678",
+    "phone": "87654321",
+    "email": "provider@email.com",
+    "site": "www.provider.com",
+    "classCategories": [
+      {
+        "id": 1,
+        "name": "classCategory",
+        "domainCategory": {
+          "id": 1,
+          "name": "domainCategory"
+        }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "providersName3",
+    "city": "providersCity3",
+    "street": "providersStreet",
+    "building": "19",
+    "block": "1",
+    "mobile": "12345678",
+    "phone": "87654321",
+    "email": "provider@email.com",
+    "site": "www.provider.com",
+    "classCategories": [
+      {
+        "id": 1,
+        "name": "classCategory",
+        "domainCategory": {
+          "id": 1,
+          "name": "domainCategory"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,26 @@
+<div class="selected-body">
+  <div  class="selected-option-field"
+        [class.open]="isVisible"
+        (click)="selectDropdownTogle($event)">
+    <div *ngIf="optionSelected && settings.useTag" class="selected-option-tag">
+      {{optionSelected.name}}
+      <span (click)="onDeleteOptSelected($event)">&#10006;</span>
+    </div>
+    <div *ngIf="optionSelected && !settings.useTag" class="selected-option">
+      {{optionSelected.name}}
+    </div>
+    <div *ngIf="!optionSelected" class="placeholder">{{settings.placeholder}}</div>
+  </div>
+  <div class="dropdown-list-body">
+    <div class="dropdown-list" *ngIf="isVisible">
+      <ul>
+        <li *ngFor="let opt of optionsList"
+            data-id="{{opt.id}}"
+            (click)="onSelect($event)"
+            [class.active]="optionSelected && opt.id == optionSelected.id">
+          {{opt.name}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
